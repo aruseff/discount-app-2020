@@ -62,6 +62,3 @@ import 'zone.js/dist/zone-patch-electron';
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
-
-import 'bootstrap';
-

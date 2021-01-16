@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "electron-angular-cli-sqlite-bootstrap": {
+    "discount-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -34,9 +34,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/assets/scss/style.scss"
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "node_modules/@clr/ui/clr-ui.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js",
+              "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
+              "node_modules/@clr/icons/clr-icons.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -69,72 +74,11 @@
               ]
             }
           }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "electron-angular-cli-sqlite-bootstrap:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "electron-angular-cli-sqlite-bootstrap:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "electron-angular-cli-sqlite-bootstrap:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-builders/custom-webpack:karma",
-          "options": {
-            "customWebpackConfig": {
-              "path": "./extra-webpack.config.js",
-              "mergeStrategies": {
-                "externals": "replace"
-              }
-            },
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "electron-angular-cli-sqlite-bootstrap:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "electron-angular-cli-sqlite-bootstrap:serve:production"
-            }
-          }
         }
       }
     }
   },
-  "defaultProject": "electron-angular-cli-sqlite-bootstrap",
+  "defaultProject": "discount-app",
   "cli": {
     "analytics": false
   }

@@ -1,0 +1,98 @@
+<div class="clubs-list">
+
+  <clr-datagrid>
+    <clr-dg-column [clrDgField]="'club'" [clrDgSortBy]="clubComparator">
+      Клуб
+      <clr-dg-string-filter [clrDgStringFilter]="clubFilter"></clr-dg-string-filter>
+    </clr-dg-column>
+
+    <clr-dg-row>
+      <clr-dg-cell style="cursor:pointer;" (click)="addClubExpanded=!addClubExpanded">
+        <span style="font-weight:bold;margin-left:10px;color:#004c8a;">Добави клуб</span>
+        <span style="float:right;margin-right:20px;">
+          <clr-icon *ngIf="!addClubExpanded" shape="caret" style="transform: rotate(90deg);"></clr-icon>
+          <clr-icon *ngIf="addClubExpanded" shape="caret" style="transform: rotate(180deg);"></clr-icon>
+        </span>
+      </clr-dg-cell>
+
+      <clr-dg-row-detail [(clrIfExpanded)]="addClubExpanded">
+        <div class="list-item">
+          <div class="list-item-content">
+            <input [ngClass]="{'error-input': addClubNameError}" clrInput placeholder="Клуб"
+              [(ngModel)]="newClubName" />
+            <input [ngClass]="{'error-input': addClubChairmanError}" clrInput placeholder="Председател"
+              [(ngModel)]="newClubChairman" />
+          </div>
+          <button class="btn add-button" (click)="addClub()">Добави</button>
+        </div>
+      </clr-dg-row-detail>
+    </clr-dg-row>
+
+    <clr-dg-row *clrDgItems="let club of clubs" [ngClass]="{'active-club': selectedClub?.id==club.id}"
+      style="cursor:pointer;" (click)="selectClub(club)">
+      <clr-dg-cell>
+
+        <div class="list-item">
+
+          <clr-icon shape="trash" class="is-solid delete-icon" (click)="deleteClub(club.id)"></clr-icon>
+
+          <div class="list-item-content">
+            <h4 [title]="club.name">{{club.name}}</h4>
+            <p [title]="club.chairman">{{club.chairman}}</p>
+          </div>
+
+          <div class="bordered-number">
+            {{club.purchases}}
+          </div>
+
+        </div>
+
+      </clr-dg-cell>
+    </clr-dg-row>
+
+    <clr-dg-footer>{{clubs?.length}} {{clubs?.length == 1 ? 'клуб' : 'клуба'}}</clr-dg-footer>
+  </clr-datagrid>
+
+</div>
+
+<div class="main-panel">
+
+  <div *ngIf="selectedClub">
+    <h2>{{selectedClub.name}}</h2>
+
+    <clr-datagrid style="margin-top:20px;">
+      <clr-dg-column>Продукт</clr-dg-column>
+      <clr-dg-column>Ед. цена(лв)</clr-dg-column>
+      <clr-dg-column>Поръчки до сега</clr-dg-column>
+      <clr-dg-column>Отспъпка(%)</clr-dg-column>
+      <clr-dg-column>Отспъпка(лв)</clr-dg-column>
+
+
+      <clr-dg-row *clrDgItems="let product of products; let i = index">
+        <clr-dg-cell>{{product.name}}</clr-dg-cell>
+        <clr-dg-cell>{{product.price}}</clr-dg-cell>
+        <clr-dg-cell>{{selectedClub.purchases}}</clr-dg-cell>
+        <clr-dg-cell>{{calculateDiscountPercent(selectedClub, product)}}</clr-dg-cell>
+        <clr-dg-cell>{{calculateDiscountValue(selectedClub, product)}}</clr-dg-cell>
+      </clr-dg-row>
+
+    </clr-datagrid>
+
+    <h3 style="margin-top:80px;">Нова поръчка</h3>
+
+    <div class="new-order-form">
+      <select style="float:left" clrSelect [(ngModel)]="newOrderProduct">
+        <!-- <option value="null">Избери продукт</option> -->
+        <option *ngFor="let product of products" [value]="product">{{product.name}}</option>
+      </select>
+
+      <input type="number" min="0" [(ngModel)]="newOrderCount">
+      <div><span>бр</span></div>
+
+      <button class="btn btn-danger-outline add-button" (click)="removeNewOrder()">Премахни</button>
+      <button class="btn add-button" (click)="addNewOrder()">Добави</button>
+    </div>
+  </div>
+
+
+</div>

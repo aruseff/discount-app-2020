@@ -1,11 +1,6 @@
 {
-  "name": "electron-angular-cli-sqlite-bootstrap",
-  "productName": "Electron-Angular-cli-Sqlite-Bootstrap",
-  "description": "An Electron application using Angular-cli, Sqlite and Bootstrap",
-  "author": {
-    "name": "pamtbaau"
-  },
-  "version": "1.0.3",
+  "name": "discount-app",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "electron .",
@@ -16,11 +11,10 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "package": "electron-builder",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "electron:windows": "npm run build:once && electron-builder build --windows"
   },
   "build": {
-    "appId": "com.pamtbaau.angular-cli-electron-sqlite-bootstrap",
-    "productName": "Angular-cli-Electron-SQLite-Bootstrap",
     "directories": {
       "output": "build"
     },
@@ -51,14 +45,17 @@
     "@angular/platform-browser": "~11.0.5",
     "@angular/platform-browser-dynamic": "~11.0.5",
     "@angular/router": "~11.0.5",
-    "bootstrap": "^4.5.3",
+    "@clr/angular": "4.0.9",
     "jquery": "^3.5.1",
     "karma-electron": "^6.3.1",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.3",
     "sqlite3": "^5.0.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "@clr/ui": "4.0.9",
+    "@clr/icons": "4.0.9",
+    "@webcomponents/webcomponentsjs": "^2.0.0"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^10.0.1",

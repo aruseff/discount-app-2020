@@ -1,0 +1,130 @@
+.clubs-list {
+    height: calc(100% - 60px);
+    width: 350px;
+    float: left;
+    .datagrid-host {
+        height: 100%;
+    }
+    .datagrid {
+        margin-top: 0px;
+    }
+    .datagrid-column-title {
+        font-size: 16px;
+    }
+    .clr-form-control {
+        margin-top: 10px;
+    }
+    .datagrid-expandable-caret {
+        display: none;
+    }
+}
+
+.bordered-number {
+    width: 30px;
+    line-height: 30px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: auto;
+    text-align: center;
+    font-size: 16px;
+    color: #004c8a;
+    border: 1px solid #004c8a;
+}
+
+.add-button {
+    margin: 0px;
+    margin-left: auto;
+    margin-top: auto;
+}
+
+.list-item {
+    width: 300px;
+    display: flex;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    .delete-icon {
+        height: 20px;
+        width: 20px;
+        margin-top: 15px;
+        cursor: pointer;
+        &:hover {
+            color: red;
+        }
+    }
+    &:last-child {
+        border-bottom: none;
+    }
+    &-content {
+        margin-left: 10px;
+        h4,
+        p {
+            width: 220px;
+            margin: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        h4 {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        p {
+            color: rgb(170, 170, 170);
+        }
+    }
+}
+
+.active-club,
+.active-club:hover {
+    background: #d8e3e9;
+}
+
+.error-input {
+    border: 1px solid #c72100;
+    border-radius: 5px;
+}
+
+.main-panel {
+    height: calc(100% - 60px);
+    width: 650px;
+    float: left;
+    padding: 20px;
+}
+
+.new-order-form {
+    margin-top: 30px;
+    .clr-form-control {
+        margin-top: 0px;
+        margin-right: 80px;
+        float: left;
+        .clr-control-container {
+            padding-top: 12px;
+        }
+    }
+    input {
+        line-height: 36px;
+        width: 50px;
+        float: left;
+        border: none;
+        border-bottom: 1px solid gray;
+        text-align: center;
+        margin-right: 10px;
+        &:focus {
+            border: none;
+        }
+    }
+    div {
+        position: relative;
+        float: left;
+        height: 36px;
+        span {
+            position: absolute;
+            bottom: 0;
+        }
+    }
+    button {
+        float: right;
+        margin-left: 5px;
+    }
+}

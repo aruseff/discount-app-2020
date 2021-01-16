@@ -1,116 +1,49 @@
 import { Component } from '@angular/core';
-import * as fs from 'fs';
-import * as path from 'path';
+import { DiscountDatabase } from './data/database';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { Menu, MenuItemConstructorOptions, OpenDialogOptions, remote, OpenDialogSyncOptions, SaveDialogSyncOptions } from 'electron';
-
-import { Hero } from './model/hero';
-import { Settings } from './model/settings';
-import { TheDb } from './model/thedb';
+var remote = window.require('electron').remote;
+var electronFs = remote.require('fs');
+var app = remote.app;
+var process = window.require('process');
 
 @Component({
     selector: 'app-root',
-    templateUrl: 'app.component.html',
-})
-export class AppComponent {
-    public heroes: Hero[];
-
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+  })
+  export class AppComponent {
+  
+    dbName: string = "dc-database.db";
+    dbPath: string = "";
+    dbExist: boolean = false;
+  
     constructor() {
-        Settings.initialize();
-
-        if (fs.existsSync(Settings.dbPath)) {
-            this.openDb(Settings.dbPath);
-        } else if (Settings.hasFixedDbLocation) {
-            this.createDb(Settings.dbPath);
-        } else {
-            this.createDb();
-        }
+  
+      if (process.env.PORTABLE_EXECUTABLE_DIR) {
+        this.dbPath = process.env.PORTABLE_EXECUTABLE_DIR;
+      } else {
+        this.dbPath = app.getAppPath();
+      }
+      this.dbPath += '\\' + this.dbName;
+  
+  
+      if (electronFs.existsSync(this.dbPath)) {
+        this.dbExist = true;
+        this.loadDb(this.dbPath);
+      } else {
+        this.dbExist = false;
+        this.loadDb(this.dbPath);
+      }
     }
-
-    public openDb(filename: string) {
-        TheDb.openDb(filename)
-            .then(() => {
-                if (!Settings.hasFixedDbLocation) {
-                    Settings.dbPath = filename;
-                    Settings.write();
-                }
-            })
-            .then(() => {
-                this.getHeroes();
-            })
-            .catch((reason) => {
-                // Handle errors
-                console.log('Error occurred while opening database: ', reason);
-            });
+  
+    public loadDb(dbPath: string) {
+      DiscountDatabase.loadDb(dbPath)
+        .then(() => {
+          console.log("DB loaded successfully");
+        })
+        .catch((error) => {
+          console.log('Error occurred while opening database: ', error);
+        });
     }
-
-    public async createDb(filename?: string) {
-        if (!filename) {
-            const options: SaveDialogSyncOptions = {
-                title: 'Create file',
-                defaultPath: remote.app.getPath('documents'),
-                filters: [
-                    {
-                        name: 'Database',
-                        extensions: ['db'],
-                    },
-                ],
-            };
-            filename = remote.dialog.showSaveDialogSync(remote.getCurrentWindow(), options);
-        }
-
-        if (!filename) {
-            return;
-        }
-
-        TheDb.createDb(filename)
-            .then((dbPath) => {
-                if (!Settings.hasFixedDbLocation) {
-                    Settings.dbPath = dbPath;
-                    Settings.write();
-                }
-            })
-            .then(() => {
-                this.getHeroes();
-            })
-            .catch((reason) => {
-                console.log(reason);
-            });
-    }
-
-    public onRestoreDb() {
-        TheDb.importJson(path.join(Settings.dbFolder, 'database.init.json'), false)
-            .then(() => {
-                this.getHeroes();
-            });
-    }
-
-    public getHeroes() {
-        Hero.getAll()
-            .then((heroes) => {
-                this.heroes = heroes;
-            });
-    }
-
-    public onMenu(hero: Hero) {
-        const menu = this.initMenu(hero);
-        menu.popup({});
-    }
-
-    private deleteHero(hero: Hero) {
-        hero.delete();
-        this.getHeroes();
-    }
-
-    private initMenu(hero: Hero): Menu {
-        const template: MenuItemConstructorOptions[] = [
-            {
-                label: `Delete ${hero.name}`,
-                click: () => this.deleteHero(hero),
-            },
-        ];
-
-        return remote.Menu.buildFromTemplate(template);
-    }
-}
+  
+  }

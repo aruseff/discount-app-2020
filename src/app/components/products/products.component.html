@@ -1,0 +1,99 @@
+<div class="products-list">
+
+    <clr-datagrid>
+        <clr-dg-column [clrDgField]="'product'" [clrDgSortBy]="productComparator">
+            Продукт
+            <clr-dg-string-filter [clrDgStringFilter]="productFilter"></clr-dg-string-filter>
+        </clr-dg-column>
+
+        <clr-dg-row>
+            <clr-dg-cell style="cursor:pointer;" (click)="addProductExpanded=!addProductExpanded">
+                <span style="font-weight:bold;margin-left:10px;color:#004c8a;">Добави продукт</span>
+                <span style="float:right;margin-right:20px;">
+                    <clr-icon *ngIf="!addProductExpanded" shape="caret" style="transform: rotate(90deg);"></clr-icon>
+                    <clr-icon *ngIf="addProductExpanded" shape="caret" style="transform: rotate(180deg);"></clr-icon>
+                </span>
+            </clr-dg-cell>
+
+            <clr-dg-row-detail [(clrIfExpanded)]="addProductExpanded">
+                <div class="list-item">
+                    <div class="list-item-content">
+                        <input [ngClass]="{'error-input': addProductNameError}" clrInput placeholder="Име"
+                            [(ngModel)]="newProductName" />
+                        <input [ngClass]="{'error-input': addProductPriceError}" clrInput placeholder="Цена"
+                            [(ngModel)]="newProductPrice" />
+                    </div>
+                    <button class="btn add-button" (click)="addProduct()">Добави</button>
+                </div>
+            </clr-dg-row-detail>
+        </clr-dg-row>
+
+        <clr-dg-row *clrDgItems="let product of products"
+            [ngClass]="{'active-product': selectedProduct?.id==product.id}" style="cursor:pointer;"
+            (click)="selectProduct(product)">
+            <clr-dg-cell>
+
+                <div class="list-item">
+
+                    <clr-icon shape="trash" class="is-solid delete-icon" (click)="deleteProduct(product.id)"></clr-icon>
+
+                    <div class="list-item-content">
+                        <h4 [title]="product.name">{{product.name}}</h4>
+                        <p [title]="product.price">{{product.price}}</p>
+                    </div>
+
+                </div>
+
+            </clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>{{products?.length}} {{products?.length == 1 ? 'продукт' : 'продукта'}}</clr-dg-footer>
+    </clr-datagrid>
+
+
+</div>
+
+
+<div class="main-panel">
+
+    <div *ngIf="selectedProduct">
+        <h2>{{selectedProduct.name}}</h2>
+        
+        <div class="product-info">
+
+        </div>
+
+        <!-- <clr-datagrid style="margin-top:20px;">
+        <clr-dg-column>Продукт</clr-dg-column>
+        <clr-dg-column>Ед. цена(лв)</clr-dg-column>
+        <clr-dg-column>Поръчки до сега</clr-dg-column>
+        <clr-dg-column>Отспъпка(%)</clr-dg-column>
+        <clr-dg-column>Отспъпка(лв)</clr-dg-column>
+  
+  
+        <clr-dg-row *clrDgItems="let product of products; let i = index">
+          <clr-dg-cell>{{product.name}}</clr-dg-cell>
+          <clr-dg-cell>{{product.price}}</clr-dg-cell>
+          <clr-dg-cell>{{selectedClub.purchases}}</clr-dg-cell>
+          <clr-dg-cell>{{calculateDiscountPercent(selectedClub, product)}}</clr-dg-cell>
+          <clr-dg-cell>{{calculateDiscountValue(selectedClub, product)}}</clr-dg-cell>
+        </clr-dg-row>
+  
+      </clr-datagrid>
+  
+      <h3 style="margin-top:80px;">Нова поръчка</h3>
+  
+      <div class="new-order-form">
+        <select style="float:left" clrSelect [(ngModel)]="newOrderProduct">
+          <option value="null">Избери продукт</option>
+          <option *ngFor="let product of products" [value]="product">{{product.name}}</option>
+        </select>
+  
+        <input type="number" min="0" [(ngModel)]="newOrderCount">
+        <div><span>бр</span></div>
+  
+        <button class="btn btn-danger-outline add-button" (click)="removeNewOrder()">Премахни</button>
+        <button class="btn add-button" (click)="addNewOrder()">Добави</button>
+      </div> -->
+    </div>
+</div>
