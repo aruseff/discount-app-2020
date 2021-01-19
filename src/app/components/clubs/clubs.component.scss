@@ -19,18 +19,6 @@
     }
 }
 
-.bordered-number {
-    width: 30px;
-    line-height: 30px;
-    height: 30px;
-    margin-top: 10px;
-    margin-left: auto;
-    text-align: center;
-    font-size: 16px;
-    color: #004c8a;
-    border: 1px solid #004c8a;
-}
-
 .add-button {
     margin: 0px;
     margin-left: auto;
@@ -47,6 +35,7 @@
         height: 20px;
         width: 20px;
         margin-top: 15px;
+        margin-left: auto;
         cursor: pointer;
         &:hover {
             color: red;
@@ -94,6 +83,7 @@
 
 .new-order-form {
     margin-top: 30px;
+    overflow: auto;
     .clr-form-control {
         margin-top: 0px;
         margin-right: 80px;

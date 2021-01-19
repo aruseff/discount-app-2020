@@ -1,6 +1,7 @@
 export interface Discount {
-    id: string;
+    id?: number;
     from: number;
     to: number;
     percent: number;
+    productId: number;
 }

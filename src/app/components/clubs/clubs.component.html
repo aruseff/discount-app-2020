@@ -33,17 +33,12 @@
       <clr-dg-cell>
 
         <div class="list-item">
-
-          <clr-icon shape="trash" class="is-solid delete-icon" (click)="deleteClub(club.id)"></clr-icon>
-
           <div class="list-item-content">
             <h4 [title]="club.name">{{club.name}}</h4>
             <p [title]="club.chairman">{{club.chairman}}</p>
           </div>
 
-          <div class="bordered-number">
-            {{club.purchases}}
-          </div>
+          <clr-icon shape="trash" class="is-solid delete-icon" (click)="deleteClub(club.id)"></clr-icon>
 
         </div>
 
@@ -58,41 +53,55 @@
 <div class="main-panel">
 
   <div *ngIf="selectedClub">
-    <h2>{{selectedClub.name}}</h2>
+    <div class="card">
+      <div class="card-header" style="font-size:25px;">{{selectedClub.name}}</div>
+      <div class="card-block" style="overflow:auto;max-height:450px;">
+        <div class="card-title" style="font-size:15px;">
+          <span><span style="font-weight:bold;">Id:</span> {{selectedClub.id}}</span><br>
+          <span><span style="font-weight:bold;">Председател:</span> {{selectedClub.chairman}}</span>
+        </div>
+        <div class="card-text">
+          <clr-datagrid style="margin-top:20px;">
+            <clr-dg-column>Продукт</clr-dg-column>
+            <clr-dg-column>Ед. цена(лв)</clr-dg-column>
+            <clr-dg-column>Поръчки до сега</clr-dg-column>
+            <clr-dg-column>Отспъпка(%)</clr-dg-column>
+            <clr-dg-column>Отспъпка(лв)</clr-dg-column>
 
-    <clr-datagrid style="margin-top:20px;">
-      <clr-dg-column>Продукт</clr-dg-column>
-      <clr-dg-column>Ед. цена(лв)</clr-dg-column>
-      <clr-dg-column>Поръчки до сега</clr-dg-column>
-      <clr-dg-column>Отспъпка(%)</clr-dg-column>
-      <clr-dg-column>Отспъпка(лв)</clr-dg-column>
+            <clr-dg-row *clrDgItems="let product of products; let i = index">
+              <clr-dg-cell>{{product.name}}</clr-dg-cell>
+              <clr-dg-cell>{{product.price}}</clr-dg-cell>
+              <clr-dg-cell>{{getPurchasesCount(product)}}</clr-dg-cell>
+              <clr-dg-cell>{{calculateDiscountPercent(product)}}</clr-dg-cell>
+              <clr-dg-cell>{{calculateDiscountValue(product)}}</clr-dg-cell>
+            </clr-dg-row>
+          </clr-datagrid>
 
-
-      <clr-dg-row *clrDgItems="let product of products; let i = index">
-        <clr-dg-cell>{{product.name}}</clr-dg-cell>
-        <clr-dg-cell>{{product.price}}</clr-dg-cell>
-        <clr-dg-cell>{{selectedClub.purchases}}</clr-dg-cell>
-        <clr-dg-cell>{{calculateDiscountPercent(selectedClub, product)}}</clr-dg-cell>
-        <clr-dg-cell>{{calculateDiscountValue(selectedClub, product)}}</clr-dg-cell>
-      </clr-dg-row>
-
-    </clr-datagrid>
-
-    <h3 style="margin-top:80px;">Нова поръчка</h3>
-
-    <div class="new-order-form">
-      <select style="float:left" clrSelect [(ngModel)]="newOrderProduct">
-        <!-- <option value="null">Избери продукт</option> -->
-        <option *ngFor="let product of products" [value]="product">{{product.name}}</option>
-      </select>
-
-      <input type="number" min="0" [(ngModel)]="newOrderCount">
-      <div><span>бр</span></div>
-
-      <button class="btn btn-danger-outline add-button" (click)="removeNewOrder()">Премахни</button>
-      <button class="btn add-button" (click)="addNewOrder()">Добави</button>
+        </div>
+      </div>
     </div>
+
+    <div class="card">
+      <div class="card-header" style="font-size:25px;">Нова поръчка</div>
+      <div class="card-block">
+        <div class="card-text">
+          <div class="new-order-form">
+            <select style="float:left" clrSelect [(ngModel)]="newOrderProductId">
+              <option value="-1">Избери продукт</option>
+              <option *ngFor="let product of products" [value]="product.id">{{product.name}}</option>
+            </select>
+
+            <input type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+              [(ngModel)]="newOrderCount">
+            <div><span>бр</span></div>
+
+            <button class="btn btn-danger-outline add-button" (click)="removeNewOrder()">Премахни</button>
+            <button class="btn add-button" (click)="addNewOrder()">Добави</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
-
-
 </div>

@@ -1,5 +1,8 @@
+import { Discount } from "./discount.model";
+
 export interface Product {
-    id: string;
+    id?: number;
     name: string;
     price: number;
+    discounts?: Discount[];
 }

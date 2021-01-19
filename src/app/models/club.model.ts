@@ -1,6 +1,5 @@
 export interface Club {
-    id: string;
+    id?: number;
     name: string;
     chairman: string;
-    purchases: number;
 }

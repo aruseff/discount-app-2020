@@ -11,6 +11,8 @@
     </div>
   </header>
 
-  <router-outlet></router-outlet>
+  <span *ngIf="!dbLoaded" class="spinner center-spinner"></span>
+
+  <router-outlet *ngIf="dbLoaded"></router-outlet>
 
 </div>

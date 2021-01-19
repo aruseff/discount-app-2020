@@ -1,0 +1,30 @@
+export const schema = `
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS 'clubs' (
+	'id'	INTEGER PRIMARY KEY AUTOINCREMENT,
+	'name'	TEXT NOT NULL,
+    'chairman' TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS 'products' (
+	'id'	INTEGER PRIMARY KEY AUTOINCREMENT,
+	'name'	TEXT NOT NULL,
+    'price' INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS 'discounts' (
+	'id'	INTEGER PRIMARY KEY AUTOINCREMENT,
+	'from'	INTEGER NOT NULL,
+	'to' INTEGER NOT NULL,
+	'percent' INTEGER NOT NULL,
+	'product_id' INTEGER NOY NULL,
+	FOREIGN KEY(product_id) REFERENCES products(id)
+);
+CREATE TABLE IF NOT EXISTS 'purchases' (
+	'id'	INTEGER PRIMARY KEY AUTOINCREMENT,
+	'club_id'	INTEGER NOT NULL,
+	'product_id' INTEGER NOT NULL,
+	'quantity' INTEGER NOT NULL,
+	'date' INTEGER NOY NULL,
+	FOREIGN KEY(club_id) REFERENCES clubs(id),
+	FOREIGN KEY(product_id) REFERENCES products(id)
+);
+COMMIT;`;

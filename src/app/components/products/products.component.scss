@@ -35,6 +35,7 @@
         height: 20px;
         width: 20px;
         margin-top: 15px;
+        margin-left: auto;
         cursor: pointer;
         &:hover {
             color: red;
@@ -64,8 +65,8 @@
 }
 
 .error-input {
-    border: 1px solid #c72100;
-    border-radius: 5px;
+    border: 1px solid #c72100 !important;
+    border-radius: 5px !important;
 }
 
 .main-panel {
@@ -73,4 +74,46 @@
     width: 650px;
     float: left;
     padding: 20px;
+}
+
+.discount-card {
+    width: 30%;
+    float: left;
+    margin-right: 3%;
+    .discount-card-title {
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+        padding: 15px;
+        margin-bottom: 0;
+    }
+
+    .discount-card-body {
+        text-align: center;
+        font-size: 15px;
+    }
+
+    .discount-card-footer {
+        border-top: 1px solid #00567a;
+        margin-top: 25px;
+        padding-top: 15px;
+        text-align: center;
+    }
+    clr-select-container {
+        display: inline;
+        width: 90%;
+    }
+    input {
+        width: 130px;
+        border: 1px solid #e4e4e4;
+        border-bottom: 1px solid gray;
+        border-radius: 3px;
+        margin: 6px 7px 0px 7px;
+        padding-left: 5px;
+    }
+}
+
+.scrollable-div {
+    overflow-y: scroll;
+    height: 545px;
 }

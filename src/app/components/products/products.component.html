@@ -21,6 +21,7 @@
                         <input [ngClass]="{'error-input': addProductNameError}" clrInput placeholder="Име"
                             [(ngModel)]="newProductName" />
                         <input [ngClass]="{'error-input': addProductPriceError}" clrInput placeholder="Цена"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                             [(ngModel)]="newProductPrice" />
                     </div>
                     <button class="btn add-button" (click)="addProduct()">Добави</button>
@@ -32,18 +33,13 @@
             [ngClass]="{'active-product': selectedProduct?.id==product.id}" style="cursor:pointer;"
             (click)="selectProduct(product)">
             <clr-dg-cell>
-
                 <div class="list-item">
-
-                    <clr-icon shape="trash" class="is-solid delete-icon" (click)="deleteProduct(product.id)"></clr-icon>
-
                     <div class="list-item-content">
                         <h4 [title]="product.name">{{product.name}}</h4>
                         <p [title]="product.price">{{product.price}}</p>
                     </div>
-
+                    <clr-icon shape="trash" class="is-solid delete-icon" (click)="deleteProduct(product.id)"></clr-icon>
                 </div>
-
             </clr-dg-cell>
         </clr-dg-row>
 
@@ -56,44 +52,54 @@
 
 <div class="main-panel">
 
-    <div *ngIf="selectedProduct">
-        <h2>{{selectedProduct.name}}</h2>
-        
-        <div class="product-info">
+    <div *ngIf="selectedProduct" style="padding:15px;">
+
+        <h2 style="margin-top:0;">{{selectedProduct.name}}</h2>
+        <h5>
+            <span><span style="font-weight:bold;">Id:</span> {{selectedProduct.id}}</span><br>
+            <span><span style="font-weight:bold;">Цена:</span> {{selectedProduct.price}}</span>
+        </h5>
+
+        <div class="scrollable-div">
+
+            <div class="card discount-card">
+                <div class="card-block">
+                    <div class="card-text">
+                        <select clrSelect style="width:110px;margin-left:10px;" [(ngModel)]="newDiscountPercent">
+                            <option *ngFor="let percent of percents" [value]="percent">{{percent}}</option>
+                        </select>
+                        <span>%</span>
+                        <input type="number" placeholder="от(броя)" min="0"
+                            [ngClass]="{'error-input': addDiscountFromError}"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                            [(ngModel)]="newDiscountFrom">
+                        <input type="number" placeholder="до(броя)" min="0"
+                            [ngClass]="{'error-input': addDiscountToError}"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                            [(ngModel)]="newDiscountTo">
+                    </div>
+                    <div class="card-footer discount-card-footer" style="margin-top:15px">
+                        <button class="btn add-button" style="margin:0;" (click)="addDiscount()">Добави</button>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngFor="let discount of discounts" class="card discount-card">
+                <div class="card-block">
+                    <div class="card-title discount-card-title">
+                        {{discount.percent}}%
+                    </div>
+                    <div class="card-text discount-card-body">
+                        {{discount.from}} - {{discount.to}} броя
+                    </div>
+                    <div class="card-footer discount-card-footer">
+                        <button class="btn btn-warning-outline" (click)="deleteDiscount(discount.id)">Премахни</button>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
-        <!-- <clr-datagrid style="margin-top:20px;">
-        <clr-dg-column>Продукт</clr-dg-column>
-        <clr-dg-column>Ед. цена(лв)</clr-dg-column>
-        <clr-dg-column>Поръчки до сега</clr-dg-column>
-        <clr-dg-column>Отспъпка(%)</clr-dg-column>
-        <clr-dg-column>Отспъпка(лв)</clr-dg-column>
-  
-  
-        <clr-dg-row *clrDgItems="let product of products; let i = index">
-          <clr-dg-cell>{{product.name}}</clr-dg-cell>
-          <clr-dg-cell>{{product.price}}</clr-dg-cell>
-          <clr-dg-cell>{{selectedClub.purchases}}</clr-dg-cell>
-          <clr-dg-cell>{{calculateDiscountPercent(selectedClub, product)}}</clr-dg-cell>
-          <clr-dg-cell>{{calculateDiscountValue(selectedClub, product)}}</clr-dg-cell>
-        </clr-dg-row>
-  
-      </clr-datagrid>
-  
-      <h3 style="margin-top:80px;">Нова поръчка</h3>
-  
-      <div class="new-order-form">
-        <select style="float:left" clrSelect [(ngModel)]="newOrderProduct">
-          <option value="null">Избери продукт</option>
-          <option *ngFor="let product of products" [value]="product">{{product.name}}</option>
-        </select>
-  
-        <input type="number" min="0" [(ngModel)]="newOrderCount">
-        <div><span>бр</span></div>
-  
-        <button class="btn btn-danger-outline add-button" (click)="removeNewOrder()">Премахни</button>
-        <button class="btn add-button" (click)="addNewOrder()">Добави</button>
-      </div> -->
+
     </div>
 </div>
