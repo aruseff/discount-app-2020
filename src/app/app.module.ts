@@ -14,6 +14,7 @@ import { DiscountsDbService } from './data/discounts.db.service';
 import { DatePipe } from '@angular/common';
 import { PurchasesDbService } from './data/purchases.db.service';
 import { DiscountsService } from './services/discount.service';
+import { StatsComponent } from './components/stats/stats.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import { DiscountsService } from './services/discount.service';
     declarations: [
         AppComponent,
         ClubsComponent,
-        ProductsComponent
+        ProductsComponent,
+        StatsComponent
     ],
     providers: [ClubsDbService, ProductsDbService, DiscountsDbService, PurchasesDbService, DiscountsService, DatePipe],
     bootstrap: [

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ClubsDbService } from 'src/app/data/clubs.db.service';
 import { DiscountsDbService } from 'src/app/data/discounts.db.service';
 import { ProductsDbService } from 'src/app/data/products.db.service';
@@ -26,16 +26,20 @@ export class ClubsComponent implements OnInit {
 
   // New Club
   addClubExpanded: boolean = false;
-  newClubName: string = '';
-  newClubChairman: string = '';
+  newClub: Club = {
+    name: '',
+    chairman: ''
+  };
   addClubNameError: boolean = false;
   addClubChairmanError: boolean = false;
+
+  deleteClubConfirmation: boolean = false;
 
   // New Order
   newOrderProductId: number = -1;
   newOrderCount: number = 0;
-  selectedClub: Club;
 
+  selectedClub: Club;
   clubs: Club[] = [];
   products: Product[] = [];
   purchases: Purchase[] = [];
@@ -46,13 +50,21 @@ export class ClubsComponent implements OnInit {
     private discountsDbService: DiscountsDbService,
     private purchaseDbService: PurchasesDbService,
     private datePipe: DatePipe,
-    private discountsService: DiscountsService) { }
+    private discountsService: DiscountsService,
+    private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.loadAllClubs();
+    this.loadProductsWithDiscounts();
+  }
+
+  loadAllClubs() {
     this.clubsDbService.findAllClubs()
       .then(clubs => this.clubs = clubs)
       .catch(error => console.log("Cannot fetch clubs from DB :: " + error));
+  }
 
+  loadProductsWithDiscounts() {
     this.productsDbService.findAllProducts()
       .then(products => {
         this.products = products;
@@ -63,6 +75,12 @@ export class ClubsComponent implements OnInit {
       .catch(error => console.log("Cannot fetch products from DB :: " + error));
   }
 
+  loadPurchases() {
+    this.purchaseDbService.findAllPurchasesByClubId(this.selectedClub.id)
+      .then(purchases => this.purchases = purchases)
+      .catch(error => console.log("Cannot fetch purchases for club from DB ::" + error));
+  }
+
   mapDiscountsToProducts(allDiscounts: Discount[]): any {
     this.products.forEach(product => {
       product.discounts = allDiscounts.filter(discount => discount.productId == product.id);
@@ -70,46 +88,42 @@ export class ClubsComponent implements OnInit {
   }
 
   addClub() {
-    if (!this.newClubName || !this.newClubChairman) {
-      this.addClubNameError = !this.newClubName;
-      this.addClubChairmanError = !this.newClubChairman;
+    if (!this.newClub.name || !this.newClub.chairman) {
+      this.addClubNameError = !this.newClub.name;
+      this.addClubChairmanError = !this.newClub.chairman;
     } else {
       this.addClubNameError = false;
       this.addClubChairmanError = false;
 
-      let newClub: Club = {
-        name: this.newClubName,
-        chairman: this.newClubChairman
-      };
-
-      this.clubsDbService.addClub(newClub)
+      this.clubsDbService.addClub(this.newClub)
         .then(id => {
-          newClub.id = id;
-          this.newClubName = '';
-          this.newClubChairman = '';
-          this.clubs.push(newClub);
+          this.newClub.id = id;
+          this.clubs.push(this.newClub);
+          this.newClub = {
+            name: '',
+            chairman: ''
+          };
         })
         .catch(error => console.log("Cannot save club to DB :: " + error));
     }
   }
 
   deleteClub(clubId) {
-    this.selectedClub = null;
-    this.clubsDbService.deleteClub(clubId)
-      .then(success => {
-        let indexToRemove = this.clubs.findIndex(club => club.id == clubId);
-        this.clubs.splice(indexToRemove, 1);
-        this.selectedClub = null;
-      })
-      .catch(error => console.log("Cannot delete club from DB :: " + error));
+    if (clubId) {
+      this.selectedClub = null;
+      this.clubsDbService.deleteClub(clubId)
+        .then(success => {
+          let indexToRemove = this.clubs.findIndex(club => club.id == clubId);
+          this.clubs.splice(indexToRemove, 1);
+          this.selectedClub = null;
+        })
+        .catch(error => console.log("Cannot delete club from DB :: " + error));
+    }
   }
 
   selectClub(club) {
     this.selectedClub = club;
-
-    this.purchaseDbService.findAllPurchasesByClubId(this.selectedClub.id)
-      .then(purchases => this.purchases = purchases)
-      .catch(error => console.log("Cannot fetch purchases for club from DB ::" + error));
+    this.loadPurchases();
   }
 
   getPurchasesCount(product: Product) {
@@ -129,7 +143,6 @@ export class ClubsComponent implements OnInit {
 
   addNewOrder() {
     if (this.newOrderProductId != -1 && this.newOrderCount > 0) {
-
       let newPurchase: Purchase = {
         clubId: this.selectedClub.id,
         productId: this.newOrderProductId,
@@ -139,23 +152,13 @@ export class ClubsComponent implements OnInit {
       this.purchaseDbService.addPurchase(newPurchase)
         .then(id => {
           newPurchase.id = id;
+          this.purchases.push(newPurchase);
+          this.loadPurchases();
           this.newOrderProductId = -1;
           this.newOrderCount = 0;
         })
         .catch(error => console.log("Cannot save purchase in DB :: " + error));
     }
-  }
-
-  removeNewOrder() {
-    // if (this.newOrderProduct && this.newOrderCount > 0) {
-    //   if (this.selectedClub.purchases - this.newOrderCount < 0) {
-    //     this.selectedClub.purchases = 0;
-    //   } else {
-    //     this.selectedClub.purchases -= this.newOrderCount;
-    //   }
-    //   this.newOrderCount = 0;
-    //   // this.clubsFileService.saveClubs(this.clubs);
-    // }
   }
 
 }

@@ -19,9 +19,9 @@
         <div class="list-item">
           <div class="list-item-content">
             <input [ngClass]="{'error-input': addClubNameError}" clrInput placeholder="Клуб"
-              [(ngModel)]="newClubName" />
+              [(ngModel)]="newClub.name" />
             <input [ngClass]="{'error-input': addClubChairmanError}" clrInput placeholder="Председател"
-              [(ngModel)]="newClubChairman" />
+              [(ngModel)]="newClub.chairman" />
           </div>
           <button class="btn add-button" (click)="addClub()">Добави</button>
         </div>
@@ -38,7 +38,7 @@
             <p [title]="club.chairman">{{club.chairman}}</p>
           </div>
 
-          <clr-icon shape="trash" class="is-solid delete-icon" (click)="deleteClub(club.id)"></clr-icon>
+          <clr-icon shape="trash" class="is-solid delete-icon" (click)="deleteClubConfirmation=true"></clr-icon>
 
         </div>
 
@@ -95,7 +95,6 @@
               [(ngModel)]="newOrderCount">
             <div><span>бр</span></div>
 
-            <button class="btn btn-danger-outline add-button" (click)="removeNewOrder()">Премахни</button>
             <button class="btn add-button" (click)="addNewOrder()">Добави</button>
           </div>
 
@@ -105,3 +104,18 @@
 
   </div>
 </div>
+
+<clr-modal [(clrModalOpen)]="deleteClubConfirmation" [clrModalClosable]="false">
+  <h3 class="modal-title">Потвърждение за изтриване</h3>
+  <div class="modal-body">
+    <p>Изтриване на клуб:</p>
+    <span style="margin-left:5px;font-weight:bold;">{{selectedClub?.name}}</span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline" (click)="deleteClubConfirmation=false">Назад</button>
+    <button type="button" class="btn btn-warning"
+      (click)="deleteClubConfirmation=false;deleteClub(selectedClub?.id)">
+      Продължи
+    </button>
+  </div>
+</clr-modal>

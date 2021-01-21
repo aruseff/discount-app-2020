@@ -19,10 +19,10 @@
                 <div class="list-item">
                     <div class="list-item-content">
                         <input [ngClass]="{'error-input': addProductNameError}" clrInput placeholder="Име"
-                            [(ngModel)]="newProductName" />
-                        <input [ngClass]="{'error-input': addProductPriceError}" clrInput placeholder="Цена"
-                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                            [(ngModel)]="newProductPrice" />
+                            [(ngModel)]="newProduct.name" />
+                        <input [ngClass]="{'error-input': addProductPriceError}" clrInput placeholder="Цена(лв)"
+                            onkeypress="return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)"
+                            [(ngModel)]="newProduct.price" />
                     </div>
                     <button class="btn add-button" (click)="addProduct()">Добави</button>
                 </div>
@@ -38,7 +38,8 @@
                         <h4 [title]="product.name">{{product.name}}</h4>
                         <p [title]="product.price">{{product.price}}</p>
                     </div>
-                    <clr-icon shape="trash" class="is-solid delete-icon" (click)="deleteProduct(product.id)"></clr-icon>
+                    <clr-icon shape="trash" class="is-solid delete-icon" (click)="deleteProductConfirmation=true">
+                    </clr-icon>
                 </div>
             </clr-dg-cell>
         </clr-dg-row>
@@ -46,9 +47,7 @@
         <clr-dg-footer>{{products?.length}} {{products?.length == 1 ? 'продукт' : 'продукта'}}</clr-dg-footer>
     </clr-datagrid>
 
-
 </div>
-
 
 <div class="main-panel">
 
@@ -57,7 +56,7 @@
         <h2 style="margin-top:0;">{{selectedProduct.name}}</h2>
         <h5>
             <span><span style="font-weight:bold;">Id:</span> {{selectedProduct.id}}</span><br>
-            <span><span style="font-weight:bold;">Цена:</span> {{selectedProduct.price}}</span>
+            <span><span style="font-weight:bold;">Цена:</span> {{selectedProduct.price}} лв</span>
         </h5>
 
         <div class="scrollable-div">
@@ -65,18 +64,18 @@
             <div class="card discount-card">
                 <div class="card-block">
                     <div class="card-text">
-                        <select clrSelect style="width:110px;margin-left:10px;" [(ngModel)]="newDiscountPercent">
+                        <select clrSelect style="width:110px;margin-left:10px;" [(ngModel)]="newDiscount.percent">
                             <option *ngFor="let percent of percents" [value]="percent">{{percent}}</option>
                         </select>
                         <span>%</span>
                         <input type="number" placeholder="от(броя)" min="0"
                             [ngClass]="{'error-input': addDiscountFromError}"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                            [(ngModel)]="newDiscountFrom">
+                            [(ngModel)]="newDiscount.from">
                         <input type="number" placeholder="до(броя)" min="0"
                             [ngClass]="{'error-input': addDiscountToError}"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                            [(ngModel)]="newDiscountTo">
+                            [(ngModel)]="newDiscount.to">
                     </div>
                     <div class="card-footer discount-card-footer" style="margin-top:15px">
                         <button class="btn add-button" style="margin:0;" (click)="addDiscount()">Добави</button>
@@ -100,6 +99,21 @@
 
         </div>
 
-
     </div>
+
 </div>
+
+<clr-modal [(clrModalOpen)]="deleteProductConfirmation" [clrModalClosable]="false">
+    <h3 class="modal-title">Потвърждение за изтриване</h3>
+    <div class="modal-body">
+        <p>Изтриване на продукт:</p>
+        <span style="margin-left:5px;font-weight:bold;">{{selectedProduct?.name}}</span>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-outline" (click)="deleteProductConfirmation=false">Назад</button>
+        <button type="button" class="btn btn-warning"
+            (click)="deleteProductConfirmation=false;deleteProduct(selectedProduct?.id)">
+            Продължи
+        </button>
+    </div>
+</clr-modal>
