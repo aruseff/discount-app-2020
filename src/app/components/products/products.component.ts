@@ -41,9 +41,6 @@ export class ProductsComponent implements OnInit {
     percent: 1,
     productId: null
   }
-  // newDiscountFrom: number;
-  // newDiscountTo: number;
-  // newDiscountPercent: number = 1;
   addDiscountFromError: boolean = false;
   addDiscountToError: boolean = false;
   percents = Array<number>(100).fill(100).map((x, i) => i + 1);

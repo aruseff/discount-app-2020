@@ -6,6 +6,7 @@ import { ProductsDbService } from 'src/app/data/products.db.service';
 import { PurchasesDbService } from 'src/app/data/purchases.db.service';
 import { Discount } from 'src/app/models/discount.model';
 import { Purchase } from 'src/app/models/purchase.model';
+import { constants } from 'src/app/utils/constants';
 import { Club } from '../../models/club.model';
 import { Product } from '../../models/product.model';
 import { DiscountsService } from '../../services/discount.service';
@@ -50,8 +51,7 @@ export class ClubsComponent implements OnInit {
     private discountsDbService: DiscountsDbService,
     private purchaseDbService: PurchasesDbService,
     private datePipe: DatePipe,
-    private discountsService: DiscountsService,
-    private changeDetectorRefs: ChangeDetectorRef) { }
+    private discountsService: DiscountsService) { }
 
   ngOnInit() {
     this.loadAllClubs();
@@ -147,7 +147,7 @@ export class ClubsComponent implements OnInit {
         clubId: this.selectedClub.id,
         productId: this.newOrderProductId,
         quantity: this.newOrderCount,
-        date: this.datePipe.transform(new Date(), 'dd/MM/yyyy')
+        date: this.datePipe.transform(new Date(), constants.dateFormat)
       }
       this.purchaseDbService.addPurchase(newPurchase)
         .then(id => {

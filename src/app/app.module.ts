@@ -15,6 +15,8 @@ import { DatePipe } from '@angular/common';
 import { PurchasesDbService } from './data/purchases.db.service';
 import { DiscountsService } from './services/discount.service';
 import { StatsComponent } from './components/stats/stats.component';
+import { NgxEchartsModule } from 'ngx-echarts';
+import * as echarts from 'echarts';
 
 @NgModule({
     imports: [
@@ -23,6 +25,7 @@ import { StatsComponent } from './components/stats/stats.component';
         AppRoutingModule,
         ClarityModule,
         BrowserAnimationsModule,
+        NgxEchartsModule.forRoot({echarts})
     ],
     declarations: [
         AppComponent,

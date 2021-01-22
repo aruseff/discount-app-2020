@@ -8,6 +8,35 @@ import { sqlQueries } from "./sql.queries";
 })
 export class PurchasesDbService {
 
+    findAllPurchases(): Promise<Purchase[]> {
+        const values = {};
+        return DiscountDatabase.selectAll(sqlQueries.select_purchases, values)
+            .then((rows) => {
+                const purchases: Purchase[] = [];
+                for (let row of rows) {
+                    let product = this.fromRow(row);
+                    purchases.push(product);
+                }
+                return purchases;
+            });
+    }
+
+    findAllPurchasesByDate(fromDate: string, toDate: string): Promise<Purchase[]> {
+        const values = {
+            $from_date: fromDate,
+            $to_date: toDate
+        };
+        return DiscountDatabase.selectAll(sqlQueries.select_purchases_by_date_range, values)
+            .then((rows) => {
+                const purchases: Purchase[] = [];
+                for (let row of rows) {
+                    let product = this.fromRow(row);
+                    purchases.push(product);
+                }
+                return purchases;
+            });
+    }
+
     findAllPurchasesByClubId(clubId: number): Promise<Purchase[]> {
         const values = { $club_id: clubId };
         return DiscountDatabase.selectAll(sqlQueries.select_purchases_by_club_id, values)

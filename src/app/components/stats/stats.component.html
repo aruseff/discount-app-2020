@@ -1,1 +1,44 @@
-<p>stats works!</p>
+<div class="main-stats-container">
+
+    <div class="products-total-div">
+        <ul class="last-months-list">
+            <li [ngClass]="{'active': lastMonthSelectedId == 0}" (click)="lastMonthSelectedId=0;loadPurchases(1)">
+                Последен месец</li>
+            <li [ngClass]="{'active': lastMonthSelectedId == 1}" (click)="lastMonthSelectedId=1;loadPurchases(3)">
+                3 месеца
+            </li>
+            <li [ngClass]="{'active': lastMonthSelectedId == 2}" (click)="lastMonthSelectedId=2;loadPurchases(6)">
+                6 месеца
+            </li>
+            <li [ngClass]="{'active': lastMonthSelectedId == 3}" (click)="lastMonthSelectedId=3;loadPurchases(12)">
+                Последна година
+            </li>
+            <li [ngClass]="{'active': lastMonthSelectedId == 4}" (click)="lastMonthSelectedId=4;loadPurchases(-1)">
+                От началото
+            </li>
+        </ul>
+
+        <div *ngIf="lastMonthSelectedId!=4" style="margin-left:30px;">
+            <span class="label label-purple date-label">{{fromDate | date: 'dd/MM/yyyy'}}</span>
+            <span style="margin-left:2px;margin-right:8px;">-</span>
+            <span class="label label-purple date-label">{{toDate | date: 'dd/MM/yyyy'}}</span>
+        </div>
+
+        <div *ngIf="lastMonthSelectedId==4" style="margin-left:30px;">
+            <span class="label label-purple date-label">От началото</span>
+        </div>
+
+        <clr-datagrid class="purchases-table">
+            <clr-dg-column>Продукт</clr-dg-column>
+            <clr-dg-column>Продадени бройки</clr-dg-column>
+
+            <clr-dg-row *clrDgItems="let stat of stats">
+                <clr-dg-cell>{{stat.product}}</clr-dg-cell>
+                <clr-dg-cell>{{stat.count}}</clr-dg-cell>
+            </clr-dg-row>
+        </clr-datagrid>
+    </div>
+
+    <div *ngIf="barChartOptions" echarts [options]="barChartOptions" class="left-chart"></div>
+    <div *ngIf="pieChartOptions" echarts [options]="pieChartOptions" class="right-chart"></div>
+</div>

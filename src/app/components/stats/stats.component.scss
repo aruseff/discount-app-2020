@@ -1,0 +1,55 @@
+.main-stats-container {
+    padding: 30px;
+}
+
+.products-total-div {
+    width: 100%;
+    height: 310px;
+    border-bottom: 2px solid gray;
+}
+
+.purchases-table {
+    height: 200px;
+}
+
+.last-months-list {
+    list-style-type: none;
+    padding-left: 15px;
+    overflow: hidden;
+    li {
+        float: left;
+        display: block;
+        color: #aeaeae;
+        text-align: center;
+        padding: 15px;
+        text-decoration: none;
+    }
+    li:hover {
+        color: #00567a;
+        cursor: pointer;
+    }
+    .active {
+        color: #00567a;
+        text-decoration: underline;
+    }
+}
+
+.date-label {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.left-chart {
+    height: 350px;
+    width: 50%;
+    padding-top: 10px;
+    float: left;
+    border-right: 2px solid gray;
+}
+
+.right-chart {
+    height: 350px;
+    width: 50%;
+    padding-top: 10px;
+    float: left;
+}

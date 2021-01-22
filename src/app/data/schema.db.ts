@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS 'purchases' (
 	'club_id'	INTEGER NOT NULL,
 	'product_id' INTEGER NOT NULL,
 	'quantity' INTEGER NOT NULL,
-	'date' INTEGER NOY NULL,
+	'date' TEXT NOY NULL,
 	FOREIGN KEY(club_id) REFERENCES clubs(id),
 	FOREIGN KEY(product_id) REFERENCES products(id)
 );
