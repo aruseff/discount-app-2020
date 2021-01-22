@@ -15,6 +15,12 @@
     "electron:windows": "npm run build:once && electron-builder build --windows"
   },
   "build": {
+    "win": {
+      "icon": "src/logo.ico",
+      "target": [
+        "portable"
+      ]
+    },
     "directories": {
       "output": "build"
     },
@@ -27,13 +33,6 @@
       "!**/config",
       "!**/assets/data",
       "!**/src"
-    ],
-    "extraResources": [
-      {
-        "from": "src/assets/data",
-        "to": "dist/assets/data",
-        "filter": "database*"
-      }
     ]
   },
   "dependencies": {

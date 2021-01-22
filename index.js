@@ -24,6 +24,9 @@ let mainWindow;
 let createWindow = () => {
 	mainWindow = new BrowserWindow({
 		show: false,
+		height: 800,
+        width: 1012,
+		icon: "src/logo.ico",
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true
@@ -33,14 +36,18 @@ let createWindow = () => {
 		mainWindow.show()
 	});
 
-	mainWindow.maximize();
+	mainWindow.setMaximizable(false);
+	// mainWindow.setMenu(null);
+	mainWindow.setResizable(false);
+
+	// mainWindow.maximize();
 
 	mainWindow.loadURL('file://' + __dirname + '/dist/index.html');
 
 	// Open the DevTools.
-	if (devMode && process.argv.indexOf('--noDevTools') === -1) {
-		mainWindow.webContents.openDevTools();
-	}
+	// if (devMode && process.argv.indexOf('--noDevTools') === -1) {
+	// 	mainWindow.webContents.openDevTools();
+	// }
 
 	mainWindow.on('closed', () => {
 		mainWindow = null;

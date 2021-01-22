@@ -39,6 +39,9 @@
         </clr-datagrid>
     </div>
 
-    <div *ngIf="barChartOptions" echarts [options]="barChartOptions" class="left-chart"></div>
-    <div *ngIf="pieChartOptions" echarts [options]="pieChartOptions" class="right-chart"></div>
+    <div *ngIf="purchases.length>0" style="overflow:auto;height:315px;">
+        <div *ngIf="barChartOptions" echarts [options]="barChartOptions" class="left-chart"></div>
+        <div *ngIf="pieChartOptions" echarts [options]="pieChartOptions" class="right-chart"></div>
+    </div>
+
 </div>
