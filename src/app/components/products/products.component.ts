@@ -105,7 +105,7 @@ export class ProductsComponent implements OnInit {
   }
 
   addDiscount() {
-    if (!this.newDiscount.from || !this.newDiscount.to) {
+    if ((!this.newDiscount.from && this.newDiscount.from != 0) || !this.newDiscount.to) {
       this.addDiscountFromError = !this.newDiscount.from;
       this.addDiscountToError = !this.newDiscount.to;
     } else if (this.newDiscount.from >= this.newDiscount.to) {

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ClubsDbService } from 'src/app/data/clubs.db.service';
 import { DiscountsDbService } from 'src/app/data/discounts.db.service';
 import { ProductsDbService } from 'src/app/data/products.db.service';
@@ -133,7 +133,9 @@ export class ClubsComponent implements OnInit {
 
   calculateDiscountValue(product: Product) {
     let purchase = this.purchases.find(purchase => purchase.productId == product.id);
-    return this.discountsService.calculateDiscountValue(purchase ? purchase.quantity : 0, product);
+    product.discountValues = this.discountsService.calculateDiscountValue(purchase ? purchase.quantity : 0, product);
+    console.log(product.discountValues);
+    return product.discountValues.total;
   }
 
   calculateDiscountPercent(product: Product) {

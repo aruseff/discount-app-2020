@@ -134,12 +134,14 @@ export class StatsComponent implements OnInit {
   refreshPieChartData() {
     let chartData: any[] = [];
     this.clubs.forEach(club => {
-      let totalCount = this.purchases.filter(purchase => purchase.clubId = club.id).reduce((a, b) => a + (b.quantity || 0), 0);
+      console.log(this.purchases);
+      let totalCount = this.purchases.filter(purchase => purchase.clubId == club.id).reduce((a, b) => a + (b.quantity || 0), 0);
       chartData.push({
         name: club.name,
         value: totalCount
       });
     });
+
     this.pieChartOptions = {
       title: {
         text: 'Клубове'
@@ -151,7 +153,7 @@ export class StatsComponent implements OnInit {
       legend: {
         orient: 'vertical',
         right: 10,
-        data: this.clubs.map(club => club.name)
+        data: chartData.map(entry => entry.name)
       },
       series: [
         {

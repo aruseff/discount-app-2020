@@ -1,6 +1,6 @@
 .clubs-list {
     height: calc(100% - 60px);
-    width: 350px;
+    width: 35%;
     float: left;
     .datagrid-host {
         height: 100%;
@@ -76,7 +76,7 @@
 
 .main-panel {
     height: calc(100% - 60px);
-    width: 650px;
+    width: 65%;
     float: left;
     padding: 20px;
 }
@@ -115,5 +115,59 @@
     button {
         float: right;
         margin-left: 5px;
+    }
+}
+
+.products-table {
+    margin-top: 20px;
+    max-height: 280px;
+    .percent-info {
+        .signpost-content-header {
+            display: none;
+        }
+        .signpost-content-body {
+            padding: 10px;
+        }
+        .signpost-action clr-icon {
+            height: 17px;
+            width: 17px;
+        }
+        table {
+            width: 100%;
+            color: rgb(0, 60, 255);
+            font-weight: bold;
+            td {
+                text-align: center;
+                width: 20%;
+            }
+        }
+        span {
+            color: rgb(0, 60, 255);
+            font-weight: bold;
+        }
+    }
+    .value-info {
+        .signpost-content-header {
+            display: none;
+        }
+        .signpost-content-body {
+            padding: 10px;
+        }
+        .signpost-action clr-icon {
+            height: 17px;
+            width: 17px;
+        }
+        table {
+            width: 100%;
+            color: rgb(0, 60, 255);
+            font-weight: bold;
+            td {
+                width: 20%;
+            }
+        }
+        span {
+            color: rgb(0, 60, 255);
+            font-weight: bold;
+        }
     }
 }

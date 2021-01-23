@@ -29,8 +29,8 @@
         </div>
 
         <clr-datagrid class="purchases-table">
-            <clr-dg-column>Продукт</clr-dg-column>
-            <clr-dg-column>Продадени бройки</clr-dg-column>
+            <clr-dg-column [clrDgSortBy]="'product'">Продукт</clr-dg-column>
+            <clr-dg-column [clrDgSortBy]="'count'">Продадени бройки</clr-dg-column>
 
             <clr-dg-row *clrDgItems="let stat of stats">
                 <clr-dg-cell>{{stat.product}}</clr-dg-cell>
@@ -39,7 +39,7 @@
         </clr-datagrid>
     </div>
 
-    <div *ngIf="purchases.length>0" style="overflow:auto;height:315px;">
+    <div *ngIf="purchases.length>0" style="overflow:auto;height:52%;">
         <div *ngIf="barChartOptions" echarts [options]="barChartOptions" class="left-chart"></div>
         <div *ngIf="pieChartOptions" echarts [options]="pieChartOptions" class="right-chart"></div>
     </div>

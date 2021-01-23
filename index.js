@@ -24,8 +24,8 @@ let mainWindow;
 let createWindow = () => {
 	mainWindow = new BrowserWindow({
 		show: false,
-		height: 800,
-        width: 1012,
+		height: 768,
+        width: 1024,
 		icon: "src/logo.ico",
 		webPreferences: {
 			nodeIntegration: true,
@@ -45,9 +45,9 @@ let createWindow = () => {
 	mainWindow.loadURL('file://' + __dirname + '/dist/index.html');
 
 	// Open the DevTools.
-	// if (devMode && process.argv.indexOf('--noDevTools') === -1) {
-	// 	mainWindow.webContents.openDevTools();
-	// }
+	if (devMode && process.argv.indexOf('--noDevTools') === -1) {
+		mainWindow.webContents.openDevTools();
+	}
 
 	mainWindow.on('closed', () => {
 		mainWindow = null;

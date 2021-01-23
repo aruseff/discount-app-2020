@@ -53,27 +53,63 @@
 <div class="main-panel">
 
   <div *ngIf="selectedClub">
-    <div class="card">
+    <div class="card" style="margin-top:0;">
       <div class="card-header" style="font-size:25px;">{{selectedClub.name}}</div>
-      <div class="card-block" style="overflow:auto;max-height:450px;">
+      <div class="card-block" style="overflow:auto;max-height:390px;">
         <div class="card-title" style="font-size:15px;">
           <span><span style="font-weight:bold;">Id:</span> {{selectedClub.id}}</span><br>
           <span><span style="font-weight:bold;">Председател:</span> {{selectedClub.chairman}}</span>
         </div>
         <div class="card-text">
-          <clr-datagrid style="margin-top:20px;">
+          <clr-datagrid class="products-table">
             <clr-dg-column>Продукт</clr-dg-column>
             <clr-dg-column>Ед. цена(лв)</clr-dg-column>
             <clr-dg-column>Поръчки до сега</clr-dg-column>
-            <clr-dg-column>Отспъпка(%)</clr-dg-column>
-            <clr-dg-column>Отспъпка(лв)</clr-dg-column>
+            <clr-dg-column>Отстъпка(%)</clr-dg-column>
+            <clr-dg-column>Отстъпка(лв)</clr-dg-column>
 
             <clr-dg-row *clrDgItems="let product of products; let i = index">
               <clr-dg-cell>{{product.name}}</clr-dg-cell>
               <clr-dg-cell>{{product.price}}</clr-dg-cell>
               <clr-dg-cell>{{getPurchasesCount(product)}}</clr-dg-cell>
-              <clr-dg-cell>{{calculateDiscountPercent(product)}}</clr-dg-cell>
-              <clr-dg-cell>{{calculateDiscountValue(product)}}</clr-dg-cell>
+              <clr-dg-cell>
+                {{calculateDiscountPercent(product)}}
+                <clr-signpost class="percent-info">
+                  <clr-signpost-content [clrPosition]="'left-middle'" *clrIfOpen>
+                    <span *ngIf="!product.discounts || product.discounts.length==0">
+                      Няма намерени отстъпки
+                    </span>
+                    <table>
+                      <tr *ngFor="let discount of product.discounts">
+                        <td>{{discount.from}}</td>
+                        <td>-</td>
+                        <td>{{discount.to}}</td>
+                        <td style="font-size:15px;">::</td>
+                        <td>{{discount.percent}}%</td>
+                      </tr>
+                    </table>
+                  </clr-signpost-content>
+                </clr-signpost>
+              </clr-dg-cell>
+              <clr-dg-cell>
+                {{calculateDiscountValue(product)}}
+                <clr-signpost class="value-info">
+                  <clr-signpost-content [clrPosition]="'left-middle'" *clrIfOpen>
+                    <span *ngIf="!product.discountValues || !product.discountValues.steps || product.discountValues.steps.length==0">
+                      Няма намерени поръчки
+                    </span>
+                    <table>
+                      <tr *ngFor="let value of product.discountValues?.steps">
+                        <td>{{value.count}} *</td>
+                        <td>{{product.price}} *</td>
+                        <td>{{value.percent}}%</td>
+                        <td style="font-size:15px;">=</td>
+                        <td>{{value.value}}</td>
+                      </tr>
+                    </table>
+                  </clr-signpost-content>
+                </clr-signpost>
+              </clr-dg-cell>
             </clr-dg-row>
           </clr-datagrid>
 
@@ -113,8 +149,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-outline" (click)="deleteClubConfirmation=false">Назад</button>
-    <button type="button" class="btn btn-warning"
-      (click)="deleteClubConfirmation=false;deleteClub(selectedClub?.id)">
+    <button type="button" class="btn btn-warning" (click)="deleteClubConfirmation=false;deleteClub(selectedClub?.id)">
       Продължи
     </button>
   </div>

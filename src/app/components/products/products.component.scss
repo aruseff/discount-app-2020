@@ -1,6 +1,6 @@
 .products-list {
     height: calc(100% - 60px);
-    width: 350px;
+    width: 35%;
     float: left;
     .datagrid-host {
         height: 100%;
@@ -71,7 +71,7 @@
 
 .main-panel {
     height: calc(100% - 60px);
-    width: 650px;
+    width: 65%;
     float: left;
     padding: 20px;
 }
@@ -115,5 +115,7 @@
 
 .scrollable-div {
     overflow-y: scroll;
-    height: 545px;
+    margin-top: 10px;
+    margin-right: -20px;
+    height: 470px;
 }
