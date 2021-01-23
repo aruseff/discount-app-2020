@@ -121,7 +121,7 @@
 .products-table {
     margin-top: 20px;
     max-height: 280px;
-    .percent-info {
+    .discount-info {
         .signpost-content-header {
             display: none;
         }
@@ -138,30 +138,6 @@
             font-weight: bold;
             td {
                 text-align: center;
-                width: 20%;
-            }
-        }
-        span {
-            color: rgb(0, 60, 255);
-            font-weight: bold;
-        }
-    }
-    .value-info {
-        .signpost-content-header {
-            display: none;
-        }
-        .signpost-content-body {
-            padding: 10px;
-        }
-        .signpost-action clr-icon {
-            height: 17px;
-            width: 17px;
-        }
-        table {
-            width: 100%;
-            color: rgb(0, 60, 255);
-            font-weight: bold;
-            td {
                 width: 20%;
             }
         }

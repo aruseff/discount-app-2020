@@ -32,8 +32,11 @@ export class ProductsDbService {
         const discountValues = { $product_id: productId };
         return DiscountDatabase.delete(sqlQueries.delete_discounts_by_product_id, discountValues)
         .then(success => {
-            const productValues = { $id: productId };
-            return DiscountDatabase.delete(sqlQueries.delete_product, productValues);
+            return DiscountDatabase.delete(sqlQueries.delete_purchase_by_product_id, discountValues)
+            .then(success => {
+                const productValues = { $id: productId };
+                return DiscountDatabase.delete(sqlQueries.delete_product, productValues);
+            });
         });
     }
 

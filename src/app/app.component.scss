@@ -10,3 +10,22 @@
     margin-top: -1.8rem;
     margin-left: -1.8rem;
 }
+
+.app-info-signpost {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    .signpost-content-header {
+        display: none;
+    }
+    .signpost-content-body {
+        padding: 10px;
+    }
+    h5 {
+        margin-top: 0px;
+        color: rgb(0, 60, 255);
+        font-size: 14px;
+        font-weight: bold;
+    }
+}

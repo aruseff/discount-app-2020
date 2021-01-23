@@ -74,7 +74,7 @@
               <clr-dg-cell>{{getPurchasesCount(product)}}</clr-dg-cell>
               <clr-dg-cell>
                 {{calculateDiscountPercent(product)}}
-                <clr-signpost class="percent-info">
+                <clr-signpost class="discount-info">
                   <clr-signpost-content [clrPosition]="'left-middle'" *clrIfOpen>
                     <span *ngIf="!product.discounts || product.discounts.length==0">
                       Няма намерени отстъпки
@@ -93,9 +93,10 @@
               </clr-dg-cell>
               <clr-dg-cell>
                 {{calculateDiscountValue(product)}}
-                <clr-signpost class="value-info">
+                <clr-signpost class="discount-info">
                   <clr-signpost-content [clrPosition]="'left-middle'" *clrIfOpen>
-                    <span *ngIf="!product.discountValues || !product.discountValues.steps || product.discountValues.steps.length==0">
+                    <span
+                      *ngIf="!product.discountValues || !product.discountValues.steps || product.discountValues.steps.length==0">
                       Няма намерени поръчки
                     </span>
                     <table>

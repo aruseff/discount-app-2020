@@ -7,8 +7,8 @@ export const sqlQueries = {
     insert_product: `INSERT INTO products (name, price) VALUES($name, $price)`,
     delete_product: `DELETE FROM products WHERE id = $id`,
 
-    select_all_discounts: `SELECT * FROM discounts`,
-    select_discounts_by_product_id: `SELECT * FROM discounts WHERE product_id = $product_id`,
+    select_all_discounts: `SELECT * FROM discounts ORDER BY percent`,
+    select_discounts_by_product_id: `SELECT * FROM discounts WHERE product_id = $product_id ORDER BY percent`,
     insert_discount: `INSERT INTO discounts ([from], [to], percent, product_id) VALUES($from, $to, $percent, $product_id)`,
     delete_discount: `DELETE FROM discounts WHERE id = $id`,
     delete_discounts_by_product_id: `DELETE FROM discounts WHERE product_id = $product_id`,
@@ -17,6 +17,7 @@ export const sqlQueries = {
     select_purchases: `SELECT id, club_id, product_id, quantity, date FROM purchases`,
     select_purchases_by_date_range: `SELECT id, club_id, product_id, quantity, date FROM purchases WHERE strftime('%s', date) > strftime('%s', $from_date) AND strftime('%s', date) <= strftime('%s', $to_date)`,
     insert_purchase: `INSERT INTO purchases (club_id, product_id, quantity, date) VALUES($club_id, $product_id, $quantity, $date)`,
-    delete_purchase: `DELETE FROM purchases WHERE id = $id`
+    delete_purchase: `DELETE FROM purchases WHERE id = $id`,
+    delete_purchase_by_product_id: `DELETE FROM purchases WHERE product_id = $product_id`
 
 }

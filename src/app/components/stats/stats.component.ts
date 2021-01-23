@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ClrDatagridSortOrder } from '@clr/angular';
 import { EChartsOption } from 'echarts';
 import { ClubsDbService } from 'src/app/data/clubs.db.service';
 import { ProductsDbService } from 'src/app/data/products.db.service';
@@ -30,6 +31,8 @@ export class StatsComponent implements OnInit {
 
   barChartOptions: EChartsOption;
   pieChartOptions: EChartsOption;
+
+  descSortOrder = ClrDatagridSortOrder.DESC;
 
   constructor(
     private clubsDbService: ClubsDbService,

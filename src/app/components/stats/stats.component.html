@@ -30,7 +30,7 @@
 
         <clr-datagrid class="purchases-table">
             <clr-dg-column [clrDgSortBy]="'product'">Продукт</clr-dg-column>
-            <clr-dg-column [clrDgSortBy]="'count'">Продадени бройки</clr-dg-column>
+            <clr-dg-column [clrDgSortBy]="'count'" [clrDgSortOrder]="descSortOrder">Продадени бройки</clr-dg-column>
 
             <clr-dg-row *clrDgItems="let stat of stats">
                 <clr-dg-cell>{{stat.product}}</clr-dg-cell>

@@ -9,6 +9,15 @@
       <a [routerLink]="'/products'" routerLinkActive="active" class="nav-link nav-text">Продукти</a>
       <a [routerLink]="'/stats'" routerLinkActive="active" class="nav-link nav-text">Статистика</a>
     </div>
+    <div class="header-actions">
+      <clr-signpost class="app-info-signpost">
+        <clr-signpost-content [clrPosition]="'bottom-left'" *clrIfOpen>
+          <h5>Версия: 1.0.0<br>
+            Дата: 15.01.2021г.<br>
+            ОС: Windows 64-bit (Portable)</h5>
+        </clr-signpost-content>
+      </clr-signpost>
+    </div>
   </header>
 
   <span *ngIf="!dbLoaded" class="spinner center-spinner"></span>
